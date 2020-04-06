@@ -1,0 +1,6 @@
+D:\Coding\Arch\Lesson1\Lesson1\bin\Debug\Lesson1.exe
+D:\Coding\Arch\Lesson1\Lesson1\bin\Debug\Lesson1.pdb
+D:\Coding\Arch\Lesson1\Lesson1\obj\Debug\Lesson1.csprojAssemblyReference.cache
+D:\Coding\Arch\Lesson1\Lesson1\obj\Debug\Lesson1.csproj.CoreCompileInputs.cache
+D:\Coding\Arch\Lesson1\Lesson1\obj\Debug\Lesson1.exe
+D:\Coding\Arch\Lesson1\Lesson1\obj\Debug\Lesson1.pdb
