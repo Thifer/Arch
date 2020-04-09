@@ -77,6 +77,22 @@ public sealed class Character2D : MonoBehaviour
                 weapon.EndFire();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            switch (_gun)
+            {
+                case GunType.Gun:
+                    _gun = GunType.Laser;
+                    break;
+                case GunType.Laser:
+                    _gun = GunType.Gun;
+                    break;
+                default: 
+                    break;
+
+            }
+        }
     }
 
     private void FixedUpdate()
