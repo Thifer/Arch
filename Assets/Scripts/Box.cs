@@ -1,6 +1,4 @@
-﻿using System;
-using System.CodeDom;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public sealed class Box : BaseInteracteble

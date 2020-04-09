@@ -4,153 +4,29 @@ using UnityEngine;
 
 public sealed class Character2D : MonoBehaviour
 {
-    public event Action<float> RunningSpeed = delegate { };
-    public event Action Jump = delegate { };
-    public event Action FireDisable = delegate { };
-    public event Action FireEnable = delegate { };
-
-    private Rigidbody2D _controllerRigidbody;
-
-    private Weapon _activeWeapon;
     [SerializeField] private Gun SimpleGun;
     [SerializeField] private Laser Laser;
-    [SerializeField] private GunType _gun;
     [SerializeField] private float _acceleration = 0.0f;
     [SerializeField] private float _maxSpeed = 0.0f;
     [SerializeField] private float _jumpForce = 0.0f;
 
-    private Vector2 _movementInput;
-    private bool _jumpInput;
+    public CharController _charController;
 
-    private bool _isJumping;
-    private bool _isFalling;
 
-    private void Start()
+    private void Awake()
     {
-        _controllerRigidbody = GetComponent<Rigidbody2D>();
+        _charController = new CharController(gameObject,GetComponent<Rigidbody2D>(),_acceleration,_maxSpeed,_jumpForce,SimpleGun,Laser);
     }
 
     private void Update()
     {
-        var moveHorizontal = 0.0f;
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveHorizontal = 1.0f;
-            Flip(-1.0f);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            moveHorizontal = -1.0f;
-            Flip(1.0f);
-        }
-
-        _movementInput = new Vector2(moveHorizontal, 0.0f);
-
-        if (!_isJumping && Input.GetKeyDown(KeyCode.Space))
-        {
-            _jumpInput = true;
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            FireEnable.Invoke();
-            switch (_gun)
-            {
-                case GunType.Gun:
-                    _activeWeapon = SimpleGun;
-                    break;
-                case GunType.Laser:
-                    _activeWeapon = Laser;
-                    break;
-                default:
-                    break;
-            }
-            _activeWeapon.Fire();
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            FireDisable.Invoke();
-            if (_activeWeapon is ICancelFire weapon)
-            {
-                weapon.EndFire();
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            switch (_gun)
-            {
-                case GunType.Gun:
-                    _gun = GunType.Laser;
-                    break;
-                case GunType.Laser:
-                    _gun = GunType.Gun;
-                    break;
-                default: 
-                    break;
-
-            }
-        }
+       _charController.OnUpdate();
     }
 
     private void FixedUpdate()
     {
-        UpdateVelocity();
-        UpdateJump();
+         _charController.OnFixUpdate();
     }
 
-    private void UpdateVelocity()
-    {
-        var velocity = _controllerRigidbody.velocity;
 
-        velocity += _movementInput * (_acceleration * Time.fixedDeltaTime);
-
-        _movementInput = Vector2.zero;
-
-        velocity.x = Mathf.Clamp(velocity.x, -_maxSpeed, _maxSpeed);
-
-        _controllerRigidbody.velocity = velocity;
-
-        var horizontalSpeedNormalized = Mathf.Abs(velocity.x) / _maxSpeed;
-        RunningSpeed.Invoke(horizontalSpeedNormalized);
-
-        // Play audio dz
-    }
-
-    private void Flip(float value)
-    {
-        Vector3 localScale = transform.localScale;
-        localScale.x = value;
-        transform.localScale = localScale;
-    }
-
-    private void UpdateJump()
-    {
-        if (_isJumping && _controllerRigidbody.velocity.y < 0)
-        {
-            _isFalling = true;
-        }
-
-        if (_jumpInput)
-        {
-            _controllerRigidbody.AddForce(new Vector2(0.0f, _jumpForce), ForceMode2D.Impulse);
-
-            Jump.Invoke();
-
-            _jumpInput = false;
-
-            _isJumping = true;
-
-            // Play audio
-        }
-        else if (_isJumping && _isFalling)
-        {
-            _isJumping = false;
-            _isFalling = false;
-
-            // Play audio
-        }
-    }
 }
