@@ -4,18 +4,21 @@ using UnityEngine;
 
 public sealed class Character2D : MonoBehaviour
 {
-    public event Action<float> RunningSpeed = delegate {  };
-    public event Action Jump = delegate {  };
-    public event Action FireDisable = delegate {  };
-    public event Action FireEnable = delegate {  };
-    
+    public event Action<float> RunningSpeed = delegate { };
+    public event Action Jump = delegate { };
+    public event Action FireDisable = delegate { };
+    public event Action FireEnable = delegate { };
+
     private Rigidbody2D _controllerRigidbody;
-    
-    [SerializeField] private Weapon _weapon;
+
+    private Weapon _activeWeapon;
+    [SerializeField] private Gun SimpleGun;
+    [SerializeField] private Laser Laser;
+    [SerializeField] private GunType _gun;
     [SerializeField] private float _acceleration = 0.0f;
     [SerializeField] private float _maxSpeed = 0.0f;
     [SerializeField] private float _jumpForce = 0.0f;
-    
+
     private Vector2 _movementInput;
     private bool _jumpInput;
 
@@ -48,17 +51,28 @@ public sealed class Character2D : MonoBehaviour
         {
             _jumpInput = true;
         }
-        
-        if (Input.GetMouseButtonDown(0)) 
+
+        if (Input.GetMouseButtonDown(0))
         {
             FireEnable.Invoke();
-            _weapon.Fire();
+            switch (_gun)
+            {
+                case GunType.Gun:
+                    _activeWeapon = SimpleGun;
+                    break;
+                case GunType.Laser:
+                    _activeWeapon = Laser;
+                    break;
+                default:
+                    break;
+            }
+            _activeWeapon.Fire();
         }
 
-        if (Input.GetMouseButtonUp(0)) 
-        { 
+        if (Input.GetMouseButtonUp(0))
+        {
             FireDisable.Invoke();
-            if (_weapon is ICancelFire weapon)
+            if (_activeWeapon is ICancelFire weapon)
             {
                 weapon.EndFire();
             }
