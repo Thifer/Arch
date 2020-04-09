@@ -6,8 +6,7 @@
     {
 
         public abstract void SetValue(float value);
-
-
+        
         public float hp { get; set; }
     }
 

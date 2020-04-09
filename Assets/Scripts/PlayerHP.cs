@@ -7,6 +7,10 @@ public sealed class PlayerHP : BaseInteracteble
 
     public override void SetValue(float value)
     {
-        _hp += value; // сделать доп проверки
+        _hp -= value; // сделать доп проверки
+        if (_hp <= 0)
+        {
+            Destroy(gameObject);//Аля смерть
+        }
     }
 }
