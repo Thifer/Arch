@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Common;
 using UnityEngine;
 
 
@@ -22,6 +23,7 @@ public sealed class LaserAmmunitiom : Ammunition
         var hit = Physics2D.Raycast(ray.origin, direction, _distance);
 
         _lineRenderer.SetPosition(1, hit.collider ? hit.point : ray.GetPoint(_distance));
+        SetDamage(hit.collider);
     }
 
 

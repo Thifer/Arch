@@ -3,10 +3,15 @@
 
 public abstract class Ammunition : MonoBehaviour
 {
-    [SerializeField] private float damage;
+    [SerializeField] protected float damage;
     protected virtual void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.TryGetComponent<IHaveHP>(out var target)&& !other.collider.CompareTag(TagManager.GetTag(TagType.Player)))
+        
+    }
+
+    protected void SetDamage(Collider2D collider2D)
+    {
+        if (collider2D.TryGetComponent<IHaveHP>(out var target)&& !collider2D.CompareTag(TagManager.GetTag(TagType.Player)))
         {
             target.SetValue(damage);
         }
