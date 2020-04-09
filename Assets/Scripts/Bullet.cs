@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 
+
 public sealed class Bullet : Ammunition
 {
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnCollisionEnter2D(Collision2D collision)
     {
-         Destroy(gameObject);
+        base.OnCollisionEnter2D(collision);
+        if (!collision.collider.CompareTag(TagManager.GetTag(TagType.Player)))
+        {
+            Destroy(gameObject);
+        }
     }
 }

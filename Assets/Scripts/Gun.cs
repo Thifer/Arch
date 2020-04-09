@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+
 public sealed class Gun : Weapon
 {
     [SerializeField] private float _force = 999;

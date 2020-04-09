@@ -1,26 +1,23 @@
 ﻿using UnityEngine;
 
 
-namespace DefaultNamespace
+public sealed class Interactable : MonoBehaviour
 {
-    public sealed class Interactable : MonoBehaviour
+    [SerializeField] private VFXType _vfxType;
+    [SerializeField] private float _hp;
+    private ListVFX _listVfx;
+
+    private void Awake()
     {
-        [SerializeField] private VFXType _vfxType;
-        [SerializeField] private float _hp;
-        private ListVFX _listVfx;
+        _listVfx = Resources.Load<ListVFX>("VFXData");
+    }
 
-        private void Awake()
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.TryGetComponent<IHaveHP>(out var playerHp))
         {
-            _listVfx = Resources.Load<ListVFX>("VFXData");
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.TryGetComponent<IInteractable>(out var playerHp))
-            {
-                _listVfx.StartParticleSystem(_vfxType, transform.position, Quaternion.identity, transform);
-                playerHp.SetValue(_hp);
-            }
+            _listVfx.StartParticleSystem(_vfxType, transform.position, Quaternion.identity, transform);
+            playerHp.SetValue(_hp);
         }
     }
 }

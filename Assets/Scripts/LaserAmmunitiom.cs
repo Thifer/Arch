@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public sealed class LaserAmmunitiom : MonoBehaviour
+
+public sealed class LaserAmmunitiom : Ammunition
 {
     private LineRenderer _lineRenderer;
     [SerializeField] private float _distance;
+
 
     private void Awake()
     {
@@ -20,4 +23,6 @@ public sealed class LaserAmmunitiom : MonoBehaviour
 
         _lineRenderer.SetPosition(1, hit.collider ? hit.point : ray.GetPoint(_distance));
     }
+
+
 }

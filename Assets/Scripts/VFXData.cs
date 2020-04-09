@@ -2,12 +2,9 @@
 using UnityEngine;
 
 
-namespace DefaultNamespace
+[Serializable]
+public struct VFXData
 {
-    [Serializable]
-    public struct VFXData
-    {
-        public VFXType Type;
-        public ParticleSystem Prefab;
-    }
+    public VFXType Type;
+    public ParticleSystem Prefab;
 }
