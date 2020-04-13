@@ -7,7 +7,7 @@ namespace DefaultNamespace
         public static readonly Dictionary<EnemyType, string> Enemies = new Dictionary<EnemyType, string>
         {
             {EnemyType.Small, "Prefabs/Enemies/Prefabs_Enemies_SmallEnemy"},
-            {EnemyType.CircleEnemy , "Prefabs/Enemies/CircleEnemy" },
+            {EnemyType.CircleEnemy , "Prefab/Enemies/CircleEnemy" },
             {EnemyType.RectangleEnemy , "Prefabs/Enemies/RectangleEnemy" },
             {EnemyType.SquareEnemy , "Prefabs/Enemies/SquareEnemy" }
 

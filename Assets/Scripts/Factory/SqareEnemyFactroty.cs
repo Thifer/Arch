@@ -6,7 +6,7 @@ namespace DefaultNamespace
     {
         public Enemy Create(Hp hp)
         {
-            var enemy = Object.Instantiate(Resources.Load<SmallEnemy>(AssetPath.Enemies[EnemyType.SquareEnemy]));
+            var enemy = Object.Instantiate(Resources.Load<SqareEnemy>(AssetPath.Enemies[EnemyType.SquareEnemy]));
 
             enemy.SetHP(hp);
 
